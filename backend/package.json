@@ -19,7 +19,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.1",
     "node-cron": "^4.1.1",
-    "nodemailer": "^7.0.3"
+    "nodemailer": "^7.0.3",
+    "openai": "^5.8.2"
   },
   "devDependencies": {
     "eslint": "^9.28.0",
