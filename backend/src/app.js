@@ -9,13 +9,16 @@ connectDB();
 
 // CORS Configuration
 const corsOptions = {
-  origin: ['http://localhost:5174', 'https://class-sync-seven.vercel.app'],
+  origin: ['http://localhost:5173', 'https://class-sync-seven.vercel.app'],
   credentials: true,
   optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+const chatbotRoutes = require('./routes/chatbotRoutes');
+app.use('/api/chatbot', chatbotRoutes);
 
 // Middlewares
 const auth = require('./middlewares/authMiddleware');
@@ -25,7 +28,7 @@ app.get('/', (req, res) => {
   res.send('AutoSubstitute API running');
 });
 
-// 🟢 Public Routes (NO auth)
+// Public Routes (NO auth)
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
@@ -53,5 +56,7 @@ app.use('/api/conflicts', conflictRoutes);
 
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
+
+
 
 module.exports = app;
