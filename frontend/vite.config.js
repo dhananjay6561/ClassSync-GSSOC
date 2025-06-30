@@ -17,11 +17,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss({
-      theme: {
-        
-      }
-    })
+    
   ],
   resolve: {
     alias: {
