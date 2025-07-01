@@ -2,6 +2,10 @@
 
 > **A Modern School Management Platform for Effortless Scheduling, Leave, and Substitution Management**
 
+<p align="center">
+  <img src="screenshots/landingpage.png" alt="Landing Page" style="max-width: 100%; display: block; margin: 0 auto;" />
+</p>
+
 ---
 
 ## 🌟 Core Idea & Vision
@@ -62,11 +66,10 @@ ClassSync/
 ---
 
 ## 🖼️ Screenshots
-> _Add screenshots below to showcase dashboards, scheduling, and leave management features._
 
 | Dashboard Example | Leave Management | Substitution Assignment |
 |-------------------|------------------|------------------------|
-| ![Landing Page](screenshots/landingpage.png) |![Dashboard](screenshots/dashboard.png) | ![Leave](screenshots/leave.png) | ![Substitution](screenshots/substitution.png) |
+|![Dashboard](screenshots/dashboard.png) | ![Leave](screenshots/leave.png) | ![Substitution](screenshots/substitution.png) |
 
 ---
 
