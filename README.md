@@ -89,7 +89,8 @@ We welcome contributions from the community! To contribute:
 1. **Fork the repository** on GitHub.
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/dhananjay6561/ClassSync
+   git clone https://github.com/dhananjay6561/ClassSync-GSSOC.git
+   cd ClassSync-GSSOC
    ```
 3. **Create a new branch** for your feature or bugfix:
    ```bash
