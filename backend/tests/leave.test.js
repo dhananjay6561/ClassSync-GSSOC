@@ -75,7 +75,7 @@ describe('Leave API Tests', () => {
     });
 
     const res = await request(app)
-      .patch(`/api/leaves/${leave._id}/status`)
+      .put(`/api/leaves/${leave._id}/approve`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({
         status: 'approved',

@@ -54,7 +54,8 @@ describe('Substitution History API', () => {
       substituteTeacherId: teacher2._id,
       scheduleSlotId: slot._id,
       reason: 'Sick Leave',
-      schoolId
+      schoolId,
+      date: new Date('2025-06-15')
     });
 
     adminToken = generateToken(admin);
@@ -82,7 +83,7 @@ describe('Substitution History API', () => {
 
   test('Should filter by date range', async () => {
     const res = await request(app)
-      .get('/api/substitutions/history?from=2025-06-01&to=2025-06-30')
+      .get('/api/substitutions/history?from=2025-07-01&to=2025-07-31')
       .set('Authorization', `Bearer ${adminToken}`);
 
     expect(res.statusCode).toBe(200);

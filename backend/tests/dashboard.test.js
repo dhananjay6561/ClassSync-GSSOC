@@ -100,7 +100,8 @@ beforeEach(async () => {
     substituteTeacherId: teacher2._id,
     scheduleSlotId: new mongoose.Types.ObjectId(), // dummy
     reason: 'Leave',
-    schoolId
+    schoolId,
+    date: new Date() 
   });
 });
 
