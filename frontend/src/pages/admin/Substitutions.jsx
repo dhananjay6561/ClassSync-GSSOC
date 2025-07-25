@@ -4,24 +4,25 @@ import api from '../../utils/api';
 import { FiUsers, FiCalendar, FiBookOpen, FiAlertTriangle, FiEdit3, FiFilter, FiDownload, FiEye, FiX } from 'react-icons/fi';
 import ActionConfirmationModal from '../../components/ui/ActionConfirmationModal';
 import Toast from '../../components/ui/Toast';
-
+import { useTheme } from '../../context/ThemeContext';
 const StatCard = ({ icon, title, value, subtitle, alertColor = false, onClick = null }) => (
   <div 
-    className={`bg-white p-4 sm:p-6 rounded-lg shadow-md flex items-center ${onClick ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''}`}
+    className={`bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md flex items-center transition-all duration-200 ${onClick ? 'cursor-pointer hover:shadow-lg dark:hover:bg-gray-700' : ''}`}
     onClick={onClick}
   >
-    <div className={`${alertColor ? 'bg-red-100 text-red-600' : 'bg-indigo-100 text-indigo-600'} p-3 sm:p-4 rounded-full`}>
+    <div className={`${alertColor ? 'bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400' : 'bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400'} p-3 sm:p-4 rounded-full`}>
       {icon}
     </div>
     <div className="ml-3 sm:ml-4 min-w-0 flex-1">
-      <p className="text-xs sm:text-sm text-gray-500 truncate">{title}</p>
-      <p className={`text-lg sm:text-2xl font-bold ${alertColor ? 'text-red-600' : 'text-gray-800'}`}>{value}</p>
-      <p className="text-xs text-gray-400 truncate">{subtitle}</p>
+      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">{title}</p>
+      <p className={`text-lg sm:text-2xl font-bold ${alertColor ? 'text-red-600 dark:text-red-400' : 'text-gray-800 dark:text-gray-100'}`}>{value}</p>
+      <p className="text-xs text-gray-400 dark:text-gray-500 truncate">{subtitle}</p>
     </div>
   </div>
 );
 
 const StatusBadge = ({ status, reason }) => {
+  const { isDarkMode } = useTheme();
   const getStatusInfo = () => {
     if (reason?.toLowerCase().includes('leave')) {
       return { color: 'bg-blue-100 text-blue-800', text: 'Teacher Leave' };
@@ -243,7 +244,7 @@ const ClassCoverageManagement = () => {
             ? `Change the cover teacher for ${selectedSubstitution?.subject} - ${selectedSubstitution?.classSection}?`
             : selectedSubstitution ? (
                 <div className="text-left space-y-3 max-w-md">
-                  <div className="bg-gray-50 p-3 rounded">
+                  <div className="bg-gray-50 p-3 rounded ">
                     <p><strong>Date:</strong> {selectedSubstitution.date}</p>
                     <p><strong>Period:</strong> {selectedSubstitution.period}</p>
                     <p><strong>Subject:</strong> {selectedSubstitution.subject}</p>
@@ -269,10 +270,10 @@ const ClassCoverageManagement = () => {
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-6 sm:mb-8 space-y-4 sm:space-y-0">
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 break-words">Class Coverage Management</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 break-words dark:text-gray-200">Class Coverage Management</h1>
             <p className="text-gray-600 mt-1 text-sm sm:text-base">Monitor and manage teacher substitutions and class coverage</p>
           </div>
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto ">
             <button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center justify-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium"
@@ -293,9 +294,9 @@ const ClassCoverageManagement = () => {
 
         {/* Filter Panel */}
         {showFilters && (
-          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6 dark:bg-gray-900">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Filter Coverage Records</h3>
+              <h3 className="text-lg font-semibold dark:text-gray-200">Filter Coverage Records</h3>
               <button 
                 onClick={() => setShowFilters(false)}
                 className="sm:hidden p-1 text-gray-500 hover:text-gray-700"
@@ -305,7 +306,7 @@ const ClassCoverageManagement = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">From Date</label>
                 <input
                   type="date"
                   value={dateFilter.from}
@@ -314,7 +315,7 @@ const ClassCoverageManagement = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">To Date</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-200">To Date</label>
                 <input
                   type="date"
                   value={dateFilter.to}
@@ -376,9 +377,9 @@ const ClassCoverageManagement = () => {
         </div>
 
         {/* Coverage History Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-950">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-6 border-b space-y-2 sm:space-y-0">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800">Class Coverage History</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-300">Class Coverage History</h2>
             <span className="text-sm text-gray-500">{substitutions.length} records found</span>
           </div>
           
@@ -411,10 +412,10 @@ const ClassCoverageManagement = () => {
                     {substitutions.map((coverage, index) => (
                       <div key={index} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                         {/* Header with Date and Period */}
-                        <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                        <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 dark:bg-gray-950">
                           <div className="flex justify-between items-center">
                             <div>
-                              <div className="font-bold text-gray-900 text-lg">{coverage.date}</div>
+                              <div className="font-bold text-gray-900 dark:text-gray-300 text-lg">{coverage.date}</div>
                               <div className="text-sm text-gray-600 font-medium">{coverage.weekday}</div>
                             </div>
                             <div className="bg-indigo-600 text-white px-3 py-1 rounded-md text-sm font-semibold">
@@ -475,13 +476,13 @@ const ClassCoverageManagement = () => {
               <div className="hidden sm:block overflow-x-auto">
                 <table className="w-full text-left">
                   <thead>
-                    <tr className="bg-gray-50 border-b">
-                      <th className="p-4 font-semibold text-sm">Date & Time</th>
-                      <th className="p-4 font-semibold text-sm">Subject & Class</th>
-                      <th className="p-4 font-semibold text-sm">Absent Teacher</th>
-                      <th className="p-4 font-semibold text-sm">Cover Teacher</th>
-                      <th className="p-4 font-semibold text-sm">Status</th>
-                      <th className="p-4 font-semibold text-center text-sm">Actions</th>
+                    <tr className="bg-gray-50 dark:bg-gray-700 border-b dark:border-gray-600">
+                      <th className="p-4 font-semibold text-sm dark:text-gray-100">Date & Time</th>
+                      <th className="p-4 font-semibold text-sm dark:text-gray-100">Subject & Class</th>
+                      <th className="p-4 font-semibold text-sm dark:text-gray-100">Absent Teacher</th>
+                      <th className="p-4 font-semibold text-sm dark:text-gray-100">Cover Teacher</th>
+                      <th className="p-4 font-semibold text-sm dark:text-gray-100">Status</th>
+                      <th className="p-4 font-semibold text-center text-sm dark:text-gray-100">Actions</th>
                     </tr>
                   </thead>
                   <tbody>

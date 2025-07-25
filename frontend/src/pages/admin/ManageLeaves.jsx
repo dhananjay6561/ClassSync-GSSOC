@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import { FiCheckCircle, FiXCircle, FiClock, FiUsers, FiAlertCircle, FiCalendar, FiUser, FiMessageSquare } from 'react-icons/fi';
 import Toast from '../../components/ui/Toast';
-
+import { useTheme } from '../../context/ThemeContext';
 const StatusBadge = ({ status, isMobile = false }) => {
+  const { isDarkMode } = useTheme();
   const statusMap = {
     pending: {
       icon: <FiClock className={isMobile ? "w-3 h-3" : "mr-2"} />,
@@ -177,10 +178,10 @@ const ManageLeaves = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-sm p-6 flex items-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4 transition-colors duration-300">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 flex items-center">
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600 mr-3"></div>
-          <span className="text-gray-600">Loading leave requests...</span>
+          <span className="text-gray-600 dark:text-gray-300">Loading leave requests...</span>
         </div>
       </div>
     );
@@ -188,11 +189,11 @@ const ManageLeaves = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center max-w-md">
-          <FiAlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
-          <p className="text-red-600 font-medium mb-2">Error Loading Data</p>
-          <p className="text-gray-600 text-sm">{error}</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4 transition-colors duration-300">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 text-center max-w-md">
+          <FiAlertCircle className="w-12 h-12 text-red-500 dark:text-red-400 mx-auto mb-3" />
+          <p className="text-red-600 dark:text-red-400 font-medium mb-2">Error Loading Data</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">{error}</p>
         </div>
       </div>
     );
@@ -221,11 +222,11 @@ const ManageLeaves = () => {
         </div>
       )}
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-white shadow-sm">
+        <div className="lg:hidden bg-white dark:bg-gray-800 shadow-sm">
           <div className="px-4 py-6">
-            <h1 className="text-xl font-bold text-gray-900 mb-4">Leave Requests</h1>
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Leave Requests</h1>
             
             {/* Mobile Stats */}
             <div className="flex gap-3">
@@ -250,9 +251,9 @@ const ManageLeaves = () => {
         </div>
 
         {/* Desktop Header */}
-        <div className="hidden lg:block px-8 py-6">
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-800">Teacher Leave Requests</h1>
+        <div className="hidden lg:block px-8 py-6 dark:bg-gray-950">
+          <div className="flex justify-between items-center dark:bg-gray-950">
+            <h1 className="text-3xl font-bold text-gray-300">Teacher Leave Requests</h1>
             
             <div className="flex space-x-4">
               {pendingCount > 0 && (
@@ -274,26 +275,26 @@ const ManageLeaves = () => {
         </div>
 
         {/* Content */}
-        <div className="lg:px-8 lg:pb-8">
+        <div className="lg:px-8 lg:pb-8 dark:bg-gray-950">
           {/* Desktop Table View */}
-          <div className="hidden lg:block bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="hidden lg:block bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-950">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="bg-gray-50 border-b">
-                    <th className="p-4 font-semibold text-gray-700">Teacher Name</th>
-                    <th className="p-4 font-semibold text-gray-700">Leave Dates</th>
-                    <th className="p-4 font-semibold text-gray-700">Reason for Leave</th>
-                    <th className="p-4 font-semibold text-gray-700">Status</th>
-                    <th className="p-4 font-semibold text-gray-700 text-right">Actions</th>
+                  <tr className="bg-gray-50 border-b dark:bg-gray-950">
+                    <th className="p-4 font-semibold text-gray-700 dark:text-gray-200">Teacher Name</th>
+                    <th className="p-4 font-semibold text-gray-700 dark:text-gray-200">Leave Dates</th>
+                    <th className="p-4 font-semibold text-gray-700 dark:text-gray-200">Reason for Leave</th>
+                    <th className="p-4 font-semibold text-gray-700 dark:text-gray-200">Status</th>
+                    <th className="p-4 font-semibold text-gray-700 text-right dark:text-gray-200">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {leaveRequests.length === 0 ? (
                     <tr>
-                      <td colSpan="5" className="text-center p-8 text-gray-500">
+                      <td colSpan="5" className="text-center p-8 text-gray-500 dark:text-gray-200">
                         <div className="flex flex-col items-center">
-                          <FiUsers size={48} className="text-gray-300 mb-4" />
+                          <FiUsers size={48} className="text-gray-300  mb-4" />
                           <p className="text-base">No leave requests found.</p>
                           <p className="text-sm mt-1">Teacher leave requests will appear here when submitted.</p>
                         </div>
@@ -310,13 +311,13 @@ const ManageLeaves = () => {
                       const isProcessing = isApproving || isRejecting;
                       
                       return (
-                        <tr key={request._id} className="border-b hover:bg-gray-50 transition-colors">
+                        <tr key={request._id} className="border-b hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                           <td className="p-4">
-                            <div className="font-medium text-gray-900">{teacher?.name || 'Unknown Teacher'}</div>
-                            <div className="text-sm text-gray-500">{teacher?.email || 'N/A'}</div>
+                            <div className="font-medium text-gray-900 dark:text-gray-200">{teacher?.name || 'Unknown Teacher'}</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-300">{teacher?.email || 'N/A'}</div>
                           </td>
-                          <td className="p-4 text-gray-600 font-medium">{dateRange}</td>
-                          <td className="p-4 text-gray-600 max-w-xs">
+                          <td className="p-4 text-gray-600 dark:text-gray-300 font-medium">{dateRange}</td>
+                          <td className="p-4 text-gray-600 dark:text-gray-300 max-w-xs">
                             <div className="truncate" title={request.reason}>
                               {request.reason}
                             </div>
@@ -332,7 +333,7 @@ const ManageLeaves = () => {
                                 >
                                   {isApproving ? (
                                     <>
-                                      <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white mr-2"></div>
+                                      <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white dark:border-gray-950 mr-2"></div>
                                       Approving...
                                     </>
                                   ) : (
@@ -375,9 +376,9 @@ const ManageLeaves = () => {
           <div className="lg:hidden">
             {leaveRequests.length === 0 ? (
               <div className="text-center py-12 px-4">
-                <FiUsers size={48} className="mx-auto mb-4 text-gray-300" />
-                <p className="text-gray-600 font-medium mb-1">No leave requests found</p>
-                <p className="text-gray-500 text-sm">Teacher leave requests will appear here when submitted</p>
+                <FiUsers size={48} className="mx-auto mb-4 text-gray-300 dark:text-gray-600" />
+                <p className="text-gray-600 dark:text-gray-300 font-medium mb-1">No leave requests found</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">Teacher leave requests will appear here when submitted</p>
               </div>
             ) : (
               <div className="px-4 pb-4 space-y-4">
@@ -391,18 +392,18 @@ const ManageLeaves = () => {
                   const isProcessing = isApproving || isRejecting;
                   
                   return (
-                    <div key={request._id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <div key={request._id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
                       {/* Card Header */}
-                      <div className="p-4 bg-gray-50 border-b border-gray-200">
+                      <div className="p-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
                             <div className="flex items-center mb-1">
-                              <FiUser className="w-4 h-4 text-gray-400 mr-2" />
-                              <h3 className="font-semibold text-gray-900 text-sm">
+                              <FiUser className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-2" />
+                              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
                                 {teacher?.name || 'Unknown Teacher'}
                               </h3>
                             </div>
-                            <p className="text-xs text-gray-500 ml-6">{teacher?.email || 'N/A'}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 ml-6">{teacher?.email || 'N/A'}</p>
                           </div>
                           <StatusBadge status={request.status} isMobile={true} />
                         </div>
@@ -412,26 +413,26 @@ const ManageLeaves = () => {
                       <div className="p-4 space-y-3">
                         {/* Leave Dates */}
                         <div className="flex items-center">
-                          <FiCalendar className="w-4 h-4 text-gray-400 mr-3" />
+                          <FiCalendar className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3" />
                           <div>
-                            <p className="text-xs text-gray-500 uppercase tracking-wide">Leave Period</p>
-                            <p className="text-sm font-medium text-gray-900">{dateRange}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Leave Period</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">{dateRange}</p>
                           </div>
                         </div>
                         
                         {/* Reason */}
                         <div className="flex items-start">
-                          <FiMessageSquare className="w-4 h-4 text-gray-400 mr-3 mt-0.5" />
+                          <FiMessageSquare className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3 mt-0.5" />
                           <div className="flex-1">
-                            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Reason</p>
-                            <p className="text-sm text-gray-700 leading-relaxed">{request.reason}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Reason</p>
+                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{request.reason}</p>
                           </div>
                         </div>
                       </div>
                       
                       {/* Card Actions */}
                       {request.status === 'pending' && (
-                        <div className="p-4 bg-gray-50 border-t border-gray-200">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
                           <div className="flex gap-3">
                             <button 
                               onClick={() => handleApproveLeave(request)} 
@@ -466,8 +467,8 @@ const ManageLeaves = () => {
                       )}
                       
                       {request.status !== 'pending' && (
-                        <div className="p-4 bg-gray-50 border-t border-gray-200">
-                          <p className="text-xs text-gray-500 text-center">
+                        <div className="p-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
+                          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
                             {request.status === 'approved' ? 'Coverage arranged' : 'Request declined'}
                           </p>
                         </div>
