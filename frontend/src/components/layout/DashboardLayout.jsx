@@ -1,6 +1,8 @@
+// ishita051/classsync-gssoc/ClassSync-GSSOC-598ef83a1225615d16c2c56b4b1d5ab28016d423/frontend/src/components/layout/DashboardLayout.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import api from '../../utils/api';
 import {
   FiHome, FiUser, FiSettings, FiLogOut, FiHelpCircle, FiBell,
   FiUsers, FiCalendar, FiRepeat, FiBookOpen, FiClipboard, FiInfo,
@@ -21,6 +23,7 @@ const DashboardLayout = ({ children }) => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
@@ -35,8 +38,22 @@ const DashboardLayout = ({ children }) => {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
+    
+    const fetchNotifications = async () => {
+      try {
+        const response = await api.get('/api/dashboard/stats');
+        setNotificationCount(response.data.notificationCount);
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+      }
+    };
+
+    if (user) {
+      fetchNotifications();
+    }
+    
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [user]);
 
   const renderNavLinks = () => (
     <>
@@ -78,17 +95,17 @@ const DashboardLayout = ({ children }) => {
       <aside className="hidden md:flex w-64 flex-shrink-0 bg-white border-r border-gray-200 flex-col justify-between">
         <div>
           <div className="h-16 flex items-center justify-center border-b border-gray-100">
-  <div
-    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
-    title="ClassSync"
-  >
-    <img
-      src={logo}
-      alt="ClassSync Logo"
-      className="w-full h-full object-contain rounded-full"
-    />
-  </div>
-</div>
+            <div
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
+              title="ClassSync"
+            >
+              <img
+                src={logo}
+                alt="ClassSync Logo"
+                className="w-full h-full object-contain rounded-full"
+              />
+            </div>
+          </div>
           <nav className="mt-6 flex flex-col gap-1 px-4">{renderNavLinks()}</nav>
         </div>
         <div className="p-4 border-t border-gray-100 flex items-center gap-3">
@@ -112,17 +129,17 @@ const DashboardLayout = ({ children }) => {
             <div>
               <div className="h-16 flex items-center justify-between px-4 border-b">
                 <div className="h-16 flex items-center justify-center border-b border-gray-100">
-  <div
-    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
-    title="ClassSync"
-  >
-    <img
-      src={logo}
-      alt="ClassSync Logo"
-      className="w-full h-full object-contain rounded-full"
-    />
-  </div>
-</div>
+                  <div
+                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
+                    title="ClassSync"
+                  >
+                    <img
+                      src={logo}
+                      alt="ClassSync Logo"
+                      className="w-full h-full object-contain rounded-full"
+                    />
+                  </div>
+                </div>
                 <button onClick={() => setSidebarOpen(false)}>
                   <FiX size={24} className="text-gray-600" />
                 </button>
@@ -156,7 +173,9 @@ const DashboardLayout = ({ children }) => {
           <div className="flex items-center gap-6 ml-auto">
             <button className="relative text-gray-600 hover:text-gray-800">
               <FiBell size={24} />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-indigo-500 rounded-full"></span>
+              {notificationCount > 0 && (
+                <span className="absolute top-0 right-0 w-2 h-2 bg-indigo-500 rounded-full"></span>
+              )}
             </button>
           </div>
         </header>
