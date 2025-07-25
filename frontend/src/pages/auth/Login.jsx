@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, GraduationCap, Shield } from 'lucide-react';
 import api from '../../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../logo.svg';
 
@@ -119,6 +119,7 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             {/* Email Field */}
             <div>
+              <p className="text-xs text-gray-500 mb-1 text-left pl-1">Email</p>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -131,11 +132,11 @@ const Login = () => {
                   disabled={isLoading}
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1 ml-1">Email</p>
             </div>
 
             {/* Password Field */}
             <div>
+              <p className="text-xs text-gray-500 mb-1 text-left pl-1">Password</p>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -148,7 +149,6 @@ const Login = () => {
                   disabled={isLoading}
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1 ml-1">Password</p>
             </div>
 
             {/* Submit Button */}
@@ -169,36 +169,16 @@ const Login = () => {
           </form>
 
           {/* Additional Info for Demo */}
-          <div className="mt-6 pt-6 border-t border-gray-100">
+          <div className="mt-2 pt-4 border-t border-gray-100">
             <p className="text-xs text-gray-500 text-center">
-              Select a demo user above or use your credentials
+              Don't have an account?{' '}
+              <Link to="/signup" className="font-medium text-indigo-600 hover:underline">
+                Sign Up
+              </Link>
             </p>
           </div>
         </div>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
-        }
-        
-        .animate-shake {
-          animation: shake 0.5s ease-in-out;
-        }
-        
-        .active\\:scale-98:active {
-          transform: scale(0.98);
-        }
-        
-        @media (max-width: 640px) {
-          .hover\\:scale-105:hover {
-            transform: none;
-          }
-        }
-      `}</style>
     </div>
   );
 };

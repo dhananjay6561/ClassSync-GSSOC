@@ -1,15 +1,15 @@
 const User = require('../models/User');
+const School = require('../models/School');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Register new user
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role, schoolId } = req.body;
+    const { name, email, password, role } = req.body;
 
-    if (!schoolId) {
-        return res.status(400).json({ message: 'schoolId is required' });
-    }
+    // Use a default schoolId for all new registrations for demo purposes
+    const defaultSchoolId = '60d21b4667d0d8992e610c85';
 
     // Check if user exists
     let user = await User.findOne({ email });
@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
       email,
       password: hashedPassword,
       role,
-      schoolId,
+      schoolId: defaultSchoolId,
     });
     await user.save();
 

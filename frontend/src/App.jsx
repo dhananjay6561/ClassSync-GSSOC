@@ -2,6 +2,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { BookOpen, Users, Calendar, LogIn } from 'lucide-react';
 import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -127,13 +128,21 @@ function LandingPage() {
   </div>
 </div>
           
-          <Link 
-            to="/login"
-            className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-          >
-            <LogIn className="h-4 w-4" />
-            <span>Login</span>
-          </Link>
+          <div className="flex items-center space-x-4">
+            <Link 
+              to="/signup"
+              className="inline-flex items-center space-x-2 bg-white text-indigo-600 px-4 py-2 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+            >
+              <span>Sign Up</span>
+            </Link>
+            <Link 
+              to="/login"
+              className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+            >
+              <LogIn className="h-4 w-4" />
+              <span>Login</span>
+            </Link>
+          </div>
         </div>
       </nav>
       
@@ -154,7 +163,7 @@ function LandingPage() {
             
             <div className="pt-8">
               <Link 
-                to="/login"
+                to="/signup"
                 className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
                 <span>Get Started</span>
@@ -204,6 +213,7 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
         {/* Landing page with professional design */}
       <Route path="/" element={<LandingPage />} />
