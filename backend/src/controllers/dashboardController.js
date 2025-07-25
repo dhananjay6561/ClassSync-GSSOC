@@ -1,3 +1,4 @@
+// ishita051/classsync-gssoc/ClassSync-GSSOC-598ef83a1225615d16c2c56b4b1d5ab28016d423/backend/src/controllers/dashboardController.js
 const LeaveRequest = require('../models/LeaveRequest');
 const Substitution = require('../models/Substitution');
 const ScheduleSlot = require('../models/ScheduleSlot');
@@ -106,11 +107,15 @@ exports.getDashboardStats = async (req, res) => {
     }, {});
 
     const pendingLeaves = leaveStatusDistribution.Pending || 0;
+    
+    // Simulate notification count
+    const notificationCount = 5; // Replace with your actual notification logic
 
     res.json({
       totalTeachers,
       totalSchedules,
       pendingLeaves,
+      notificationCount, // Added notification count
       charts: {
         subjectsDistribution,
         weeklyLoad,
