@@ -13,11 +13,12 @@ import MyLeave from './pages/teacher/MyLeave';
 import AdminSubstitutions from './pages/admin/Substitutions';
 import TeacherSubstitutions from './pages/teacher/Substitutions';
 import ThemeToggle from './components/ui/ThemeToggle';
+import Footer from './components/ui/Footer';
 import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
-
 function ParticleBackground({ isDarkMode }) {
+// Particle Background Compon
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -203,6 +204,8 @@ function LandingPage() {
           </div>
         </div>
       </main>
+      
+      <Footer/>
     </div>
   );
 }

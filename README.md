@@ -109,3 +109,8 @@ We welcome contributions from the community! To contribute:
 - All contributions will be reviewed before merging.
 
 Thank you for helping improve ClassSync! 
+
+---
+
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
