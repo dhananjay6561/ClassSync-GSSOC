@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const ScheduleSlot = require('../models/ScheduleSlot');
+const { sendLoginCredentials } = require('../services/emailService');
 
 // Get all teachers for the admin's school
 exports.getAllTeachers = async (req, res) => {
@@ -103,6 +104,9 @@ exports.createTeacher = async (req, res) => {
     
     await newUser.save();
 
+    // Send login credentials to the new user
+    await sendLoginCredentials(email, password);
+
     // Return the new teacher's data (without password)
     const teacherToReturn = await User.findById(newUser._id).select('name email createdAt');
 
@@ -131,4 +135,4 @@ exports.getTeacherDetails = async (req, res) => {
     console.error('Get Teacher Details Error:', err);
     res.status(500).json({ message: 'Failed to fetch teacher details.' });
   }
-}; 
+};
