@@ -23,11 +23,11 @@ ClassSync/
 
 | Area         | Technologies & Tools |
 |--------------|----------------------|
-| 🌐 Frontend  | React.js, TailwindCSS, JavaScript, HTML5, CSS3 |
+| 🌐 Frontend  | React.js, TailwindCSS |
 | 🔧 Backend   | Node.js, Express.js, MongoDB, Mongoose |
 | 🔐 Auth      | JSON Web Tokens (JWT), bcrypt |
 | 📦 Dev Tools | Git, GitHub, dotenv, ESLint |
-| 🌍 Hosting   | Yet to be deployed |
+| 🌍 Hosting   | Yet to be deployed (frontend likely on Vercel and backend likely on Render)|
 
 ---
 
