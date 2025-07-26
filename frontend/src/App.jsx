@@ -12,9 +12,11 @@ import ManageLeaves from './pages/admin/ManageLeaves';
 import MyLeave from './pages/teacher/MyLeave';
 import AdminSubstitutions from './pages/admin/Substitutions';
 import TeacherSubstitutions from './pages/teacher/Substitutions';
+import Footer from './components/ui/Footer';
 import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
+
 // Particle Background Component
 function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -108,7 +110,7 @@ function ParticleBackground() {
 // Landing Page Component
 function LandingPage() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen">
       <ParticleBackground />
       
       {/* Navigation */}
@@ -193,6 +195,8 @@ function LandingPage() {
           </div>
         </div>
       </main>
+      
+      <Footer/>
     </div>
   );
 }
