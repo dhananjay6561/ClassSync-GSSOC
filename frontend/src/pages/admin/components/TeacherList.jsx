@@ -409,11 +409,11 @@ const TeacherList = () => {
         loading={isViewLoading}
       />
       
-      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+      <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md">
         {/* Header */}
         <div className="flex flex-col space-y-4 mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Manage Teachers</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100">Manage Teachers</h2>
             <button 
               onClick={() => setIsAddModalOpen(true)}
               className="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm sm:text-base self-start sm:self-auto"
@@ -479,19 +479,19 @@ const TeacherList = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-gray-50 border-b">
-                  <th className="p-4 font-semibold text-sm">Name</th>
-                  <th className="p-4 font-semibold text-sm">Email</th>
-                  <th className="p-4 font-semibold text-sm">Joined On</th>
-                  <th className="p-4 font-semibold text-sm text-right">Actions</th>
+                <tr className="bg-gray-50 dark:bg-gray-700 border-b dark:border-gray-600">
+                  <th className="p-4 font-semibold text-sm text-gray-900 dark:text-gray-100">Name</th>
+                  <th className="p-4 font-semibold text-sm text-gray-900 dark:text-gray-100">Email</th>
+                  <th className="p-4 font-semibold text-sm text-gray-900 dark:text-gray-100">Joined On</th>
+                  <th className="p-4 font-semibold text-sm text-right text-gray-900 dark:text-gray-100">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTeachers.map(teacher => (
-                  <tr key={teacher._id} className="border-b hover:bg-gray-50">
-                    <td className="p-4 text-sm font-medium">{teacher.name}</td>
-                    <td className="p-4 text-sm text-gray-600">{teacher.email}</td>
-                    <td className="p-4 text-sm text-gray-600">{new Date(teacher.createdAt).toLocaleDateString()}</td>
+                  <tr key={teacher._id} className="border-b dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td className="p-4 text-sm font-medium text-gray-900 dark:text-gray-100">{teacher.name}</td>
+                    <td className="p-4 text-sm text-gray-600 dark:text-gray-300">{teacher.email}</td>
+                    <td className="p-4 text-sm text-gray-600 dark:text-gray-300">{new Date(teacher.createdAt).toLocaleDateString()}</td>
                     <td className="p-4 flex justify-end space-x-2">
                       <button 
                         onClick={() => handleViewClick(teacher)}

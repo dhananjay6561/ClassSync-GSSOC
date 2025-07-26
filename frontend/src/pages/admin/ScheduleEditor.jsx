@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../utils/api';
 import { FiX, FiArrowLeft, FiChevronDown } from 'react-icons/fi';
 import Toast from '../../components/ui/Toast';
+import { useTheme } from '../../context/ThemeContext';
 
 
 
@@ -48,9 +49,9 @@ const ScheduleSlotModal = ({ isOpen, onClose, onSave, onDelete, slotInfo, subjec
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-xl max-w-sm w-full max-h-[90vh] overflow-y-auto">
-        <h3 className="text-lg font-bold mb-4">{isEditing ? 'Edit' : 'Create'} Schedule Slot</h3>
-        <p className="text-sm text-gray-500 mb-4">
+      <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-xl max-w-sm w-full max-h-[90vh] overflow-y-auto">
+        <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">{isEditing ? 'Edit' : 'Create'} Schedule Slot</h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
           For {slotInfo.day} - Period {slotInfo.periodIndex}
         </p>
         <form onSubmit={handleSubmit}>
@@ -188,6 +189,7 @@ const ScheduleSlotModal = ({ isOpen, onClose, onSave, onDelete, slotInfo, subjec
 };
 
 const ScheduleEditor = () => {
+  const { isDarkMode } = useTheme();
   const { teacherId } = useParams();
   const navigate = useNavigate();
   const [teacher, setTeacher] = useState(null);
