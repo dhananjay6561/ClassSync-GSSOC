@@ -1,4 +1,5 @@
 # ClassSync
+<!-- top -->
 
 > **A Modern School Management Platform for Effortless Scheduling, Leave, and Substitution Management**
 
@@ -109,3 +110,9 @@ We welcome contributions from the community! To contribute:
 - All contributions will be reviewed before merging.
 
 Thank you for helping improve ClassSync! 
+
+<p align="center">
+  <a href="#top" style="font-size: 18px; padding: 8px 16px; display: inline-block; border: 1px solid #ccc; border-radius: 6px; text-decoration: none;">
+    ⬆️ Back to Top
+  </a>
+</p>
