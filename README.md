@@ -1,4 +1,5 @@
 # ClassSync
+<!-- top -->
 
 > **A Modern School Management Platform for Effortless Scheduling, Leave, and Substitution Management**
 
@@ -114,3 +115,12 @@ Thank you for helping improve ClassSync!
 
 ## 📄 License
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+
+<p align="center">
+  <a href="#top" style="font-size: 18px; padding: 8px 16px; display: inline-block; border: 1px solid #ccc; border-radius: 6px; text-decoration: none;">
+    ⬆️ Back to Top
+  </a>
+</p>
