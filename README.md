@@ -116,3 +116,9 @@ Thank you for helping improve ClassSync!
     ⬆️ Back to Top
   </a>
 </p>
+
+---
+
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
+
