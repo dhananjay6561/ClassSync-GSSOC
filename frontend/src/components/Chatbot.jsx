@@ -14,10 +14,31 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+    const chatRef = useRef(null);
+
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (chatRef.current && !chatRef.current.contains(event.target)) {
+      setOpen(false);
+    }
+  };
+
+  if (open) {
+    document.addEventListener('mousedown', handleClickOutside);
+  }
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [open]);
+
+
 
   useEffect(() => {
     scrollToBottom();
@@ -107,7 +128,9 @@ const Chatbot = () => {
 
       {/* Chat Window */}
       {open && (
-        <div className="absolute bottom-16 right-0 w-[90vw] sm:w-96 h-[32rem] bg-white/95 backdrop-blur-md border border-indigo-100 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 animate-in slide-in-from-bottom-4 fade-in">
+        <div 
+         ref={chatRef}
+        className="absolute bottom-16 right-0 w-[90vw] sm:w-96 h-[32rem] bg-white/95 backdrop-blur-md border border-indigo-100 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-300 animate-in slide-in-from-bottom-4 fade-in">
           {/* Header */}
           <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 px-6 py-4 text-white">
             <div className="flex items-center justify-between">
