@@ -136,7 +136,6 @@ exports.getTeacherDetails = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch teacher details.' });
   }
 };
-
 // Get all students for the admin's school
 exports.getAllStudents = async (req, res) => {
   try {
