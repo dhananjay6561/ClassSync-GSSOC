@@ -130,67 +130,78 @@ function LandingPage() {
 </div>
           
           <Link 
-            to="/login"
-            className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-          >
-            <LogIn className="h-4 w-4" />
-            <span>Login</span>
-          </Link>
+  to="/login"
+  className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
+>
+  <span>Login</span>
+  <LogIn className="h-5 w-5" />
+</Link>
+
+
+
         </div>
       </nav>
       
       {/* Main Content */}
       <main className="relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-24 lg:pt-32">
+        <div className="max-w-5xl mx-auto text-center pt-16 sm:pt-24 lg:pt-32">
           {/* Hero Section */}
           <div className="space-y-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Smart School
-              <span className="block text-indigo-600">Management System</span>
-            </h1>
+            <h1 className="text-6xl font-semibold text-gray-800 tracking-tight">
+              <span className="block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-900 bg-clip-text text-transparent animate-gradient">
+    Smart School
+  </span>
+
+  Management System
+  
+</h1>
+
+
+
+
             
             <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Streamline teacher schedules, manage substitutions, and track leave applications 
-              with our comprehensive school management platform.
+              Effortlessly manage schedules, handle leaves & substitutions — all in one powerful platform built for schools.
             </p>
             
             <div className="pt-8">
               <Link 
-                to="/login"
-                className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-              >
-                <span>Get Started</span>
-                <LogIn className="h-5 w-5" />
-              </Link>
+  to="/login"
+  className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
+>
+  <span>Get Started</span>
+  <LogIn className="h-5 w-5" />
+</Link>
+
             </div>
           </div>
           
           {/* Features */}
           <div className="pt-20 sm:pt-24">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                <div className="flex justify-center mb-4">
-                  <Calendar className="h-12 w-12 text-indigo-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Schedule Management</h3>
-                <p className="text-gray-600">Efficiently organize and manage teacher schedules with our intuitive interface.</p>
-              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-[1.03]">
+  <div className="flex justify-center mb-4">
+    <Calendar className="h-12 w-12 text-indigo-600 transition-transform duration-300 group-hover:rotate-6" />
+  </div>
+  <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">Schedule Management</h3>
+  <p className="text-gray-600 text-center">Easily manage class schedules, assign periods, and optimize teaching slots.</p>
+</div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                <div className="flex justify-center mb-4">
-                  <Users className="h-12 w-12 text-indigo-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Teacher Management</h3>
-                <p className="text-gray-600">Comprehensive teacher profiles and performance tracking in one place.</p>
-              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-[1.03]">
+  <div className="flex justify-center mb-4">
+    <Users className="h-12 w-12 text-indigo-600 transition-transform duration-300 group-hover:rotate-6" />
+  </div>
+  <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">Teacher Management</h3>
+  <p className="text-gray-600 text-center">Comprehensive teacher profiles and performance tracking in one place.</p>
+</div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                <div className="flex justify-center mb-4">
-                  <BookOpen className="h-12 w-12 text-indigo-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Leave & Substitutions</h3>
-                <p className="text-gray-600">Seamless leave application and substitution management system.</p>
-              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 hover:scale-[1.03]">
+  <div className="flex justify-center mb-4">
+    <BookOpen className="h-12 w-12 text-indigo-600 transition-transform duration-300 group-hover:rotate-6" />
+  </div>
+  <h3 className="text-xl font-semibold text-gray-900 mb-2 text-center">Leave & Substitutions</h3>
+  <p className="text-gray-600 text-center">Seamless leave application and substitution management system.</p>
+</div>
             </div>
           </div>
         </div>
