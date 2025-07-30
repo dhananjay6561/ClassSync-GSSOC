@@ -2,7 +2,7 @@ const LeaveRequest = require('../models/LeaveRequest');
 const ScheduleSlot = require('../models/ScheduleSlot');
 const Substitution = require('../models/Substitution');
 const { generateSubstitutionsForLeave } = require('../services/substitutionEngine');
-const { sendLeaveStatusEmail, sendSubstitutionAssignedEmail } = require('../services/notificationService');
+const { sendLeaveStatusEmail, sendSubstitutionAssignedEmail, createNotification } = require('../services/notificationService');
 const User = require('../models/User');
 const { logAction } = require('../utils/auditLogger');
 
@@ -129,6 +129,18 @@ exports.updateLeaveStatus = async (req, res) => {
         adminComment || ''
       );
     }
+
+    // Create notification for the teacher
+    await createNotification(leaveRequest.teacherId, {
+      type: 'leave_request',
+      title: `Leave Request ${status.charAt(0).toUpperCase() + status.slice(1)}`,
+      message: `Your leave request from ${new Date(leaveRequest.fromDate).toLocaleDateString()} to ${new Date(leaveRequest.toDate).toLocaleDateString()} has been ${status}.${adminComment ? ` Admin comment: ${adminComment}` : ''}`,
+      data: {
+        leaveId: leaveRequest._id,
+        status,
+        adminComment
+      }
+    });
 
     // 🔥 AUTO-SUBSTITUTION: Generate substitutions when leave is approved
     if (status === 'approved') {
