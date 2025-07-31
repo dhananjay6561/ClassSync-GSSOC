@@ -18,7 +18,7 @@ import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
 function ParticleBackground({ isDarkMode }) {
-// Particle Background Compon
+// Particle Background Component
   const canvasRef = useRef(null);
 
   useEffect(() => {
