@@ -110,7 +110,7 @@ const DashboardLayout = ({ children }) => {
       {/* Sidebar - Mobile */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
-          <div className="w-64 bg-white dark:bg-gray-900 shadow-lg z-50 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out">
+          <div className={`w-64 bg-white dark:bg-gray-900 shadow-lg z-50 fixed inset-y-0 left-0 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
             <div>
               <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="h-16 flex items-center justify-center border-b border-gray-100">
