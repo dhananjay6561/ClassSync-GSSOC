@@ -107,7 +107,7 @@ const Login = () => {
                   }`}
                 >
                   <user.icon className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-gray-600" />
-                  <p className="text-xs sm:text-sm font-medium text-gray-700  dark:text-whiteS">{user.label}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-700  dark:text-white">{user.label}</p>
                 </button>
               ))}
             </div>
