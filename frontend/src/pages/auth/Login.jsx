@@ -129,7 +129,7 @@ const Login = () => {
             <input
               type="email" // or "password"
               placeholder="name@example.com"
-              value={email} // or password
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-10 pr-4 h-11 sm:h-12 
                         border border-gray-200 dark:border-gray-700 
