@@ -137,7 +137,7 @@ const AdminDashboard = () => {
               </>
             } />
           </CardHeader>
-          <CardContent className = "bg-gray-950">
+          <CardContent className="bg-gray-950">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={Object.entries(stats.charts.weeklyLoad || {}).map(([name, value]) => ({ name, value }))}>
                 <CartesianGrid strokeDasharray="3 3" />
