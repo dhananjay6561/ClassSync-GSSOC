@@ -42,6 +42,25 @@ exports.applyLeave = async (req, res) => {
 
     await leaveRequest.save();
 
+    // Create notification for admin about new leave request
+    const teacher = await User.findById(teacherId);
+    const adminUsers = await User.find({ schoolId, role: 'admin' });
+    for (const admin of adminUsers) {
+      await createNotification(admin._id, {
+        type: 'leave_request',
+        title: 'New Leave Request',
+        message: `${teacher.name} has submitted a leave request from ${new Date(fromDate).toLocaleDateString()} to ${new Date(toDate).toLocaleDateString()}. Reason: ${reason}`,
+        data: {
+          leaveId: leaveRequest._id,
+          teacherId: teacherId,
+          teacherName: teacher.name,
+          fromDate,
+          toDate,
+          reason
+        }
+      });
+    }
+
     res.status(201).json({ message: 'Leave request submitted successfully.', leaveRequest });
   } catch (err) {
     console.error('applyLeave error:', err);
