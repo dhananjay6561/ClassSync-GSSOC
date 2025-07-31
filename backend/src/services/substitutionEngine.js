@@ -60,6 +60,24 @@ exports.generateSubstitutionsForLeave = async (leaveRequest) => {
             date: new Date(date)
           }
         });
+
+        // Create notification for admin about substitution assignment
+        const originalTeacher = await User.findById(teacherId);
+        const adminUsers = await User.find({ schoolId, role: 'admin' });
+        for (const admin of adminUsers) {
+          await createNotification(admin._id, {
+            type: 'substitution',
+            title: 'Substitution Created',
+            message: `Substitution created: ${substitute.name} will cover ${slot.subject} for Class ${slot.classSection} on ${new Date(date).toLocaleDateString()}, Period ${slot.periodIndex + 1} (${originalTeacher.name} on leave).`,
+            data: {
+              substitutionId: sub._id,
+              originalTeacherId: teacherId,
+              substituteTeacherId: substitute._id,
+              scheduleSlotId: slot._id,
+              date: new Date(date)
+            }
+          });
+        }
       }
     }
   }
