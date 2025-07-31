@@ -98,7 +98,7 @@ const AdminDashboard = () => {
         </Card>
 
         {/* Card 2 */}
-        <Card className ="dark:bg-gray-950" >
+        <Card className="dark:bg-gray-950">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 ">
             <CardTitle className="text-sm font-medium dark:text-white">Total Scheduled Periods</CardTitle>
             <FiClipboard className="h-4 w-4 text-gray-400 dark:text-white" />
