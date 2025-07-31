@@ -1,6 +1,7 @@
 const ScheduleSlot = require('../models/ScheduleSlot');
 const Substitution = require('../models/Substitution');
 const User = require('../models/User');
+const { createNotification } = require('./notificationService');
 
 async function getAvailableSubstitute(schoolId, date, weekday, periodIndex, excludedTeacherIds = []) {
   const teachers = await User.find({ schoolId, role: 'teacher', isActive: true, _id: { $nin: excludedTeacherIds } });
@@ -46,6 +47,37 @@ exports.generateSubstitutionsForLeave = async (leaveRequest) => {
         });
 
         substitutions.push({ sub, substitute, slot, date: new Date(date) });
+
+        // Create notification for substitute teacher
+        await createNotification(substitute._id, {
+          type: 'substitution',
+          title: 'Substitution Assignment',
+          message: `You have been assigned to cover ${slot.subject} for Class ${slot.classSection} on ${new Date(date).toLocaleDateString()}, Period ${slot.periodIndex + 1}.`,
+          data: {
+            substitutionId: sub._id,
+            originalTeacherId: teacherId,
+            scheduleSlotId: slot._id,
+            date: new Date(date)
+          }
+        });
+
+        // Create notification for admin about substitution assignment
+        const originalTeacher = await User.findById(teacherId);
+        const adminUsers = await User.find({ schoolId, role: 'admin' });
+        for (const admin of adminUsers) {
+          await createNotification(admin._id, {
+            type: 'substitution',
+            title: 'Substitution Created',
+            message: `Substitution created: ${substitute.name} will cover ${slot.subject} for Class ${slot.classSection} on ${new Date(date).toLocaleDateString()}, Period ${slot.periodIndex + 1} (${originalTeacher.name} on leave).`,
+            data: {
+              substitutionId: sub._id,
+              originalTeacherId: teacherId,
+              substituteTeacherId: substitute._id,
+              scheduleSlotId: slot._id,
+              date: new Date(date)
+            }
+          });
+        }
       }
     }
   }

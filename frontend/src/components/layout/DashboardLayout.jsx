@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import api from '../../utils/api';
 import {
   FiHome, FiUser, FiSettings, FiLogOut, FiHelpCircle, FiBell,
   FiUsers, FiCalendar, FiRepeat, FiBookOpen, FiClipboard, FiInfo,
   FiMenu, FiX
 } from 'react-icons/fi';
 import logo from '../../logo.svg';
+import DynamicNotificationDropdown from '../ui/NotificationDropdown';
 
 const Dummy = ({ title }) => (
   <div className="flex flex-col items-center justify-center h-full text-gray-400">
@@ -21,11 +23,23 @@ const DashboardLayout = ({ children }) => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notificationDropdownOpen, setNotificationDropdownOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  // Fetch unread notification count
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await api.get('/api/notifications/unread-count');
+      setUnreadCount(response.data.unreadCount);
+    } catch (err) {
+      console.error('Error fetching unread count:', err);
+    }
   };
 
   useEffect(() => {
@@ -35,6 +49,10 @@ const DashboardLayout = ({ children }) => {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
+    
+    // Fetch unread count when component mounts
+    fetchUnreadCount();
+    
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
@@ -154,10 +172,25 @@ const DashboardLayout = ({ children }) => {
             <FiMenu size={24} />
           </button>
           <div className="flex items-center gap-6 ml-auto">
-            <button className="relative text-gray-600 hover:text-gray-800">
-              <FiBell size={24} />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-indigo-500 rounded-full"></span>
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setNotificationDropdownOpen(!notificationDropdownOpen)}
+                className="relative text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                <FiBell size={24} />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse flex items-center justify-center">
+                    <span className="text-xs text-white font-bold">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  </span>
+                )}
+              </button>
+              <DynamicNotificationDropdown 
+                isOpen={notificationDropdownOpen}
+                onClose={() => setNotificationDropdownOpen(false)}
+              />
+            </div>
           </div>
         </header>
 

@@ -2,7 +2,7 @@ const LeaveRequest = require('../models/LeaveRequest');
 const ScheduleSlot = require('../models/ScheduleSlot');
 const Substitution = require('../models/Substitution');
 const { generateSubstitutionsForLeave } = require('../services/substitutionEngine');
-const { sendLeaveStatusEmail, sendSubstitutionAssignedEmail } = require('../services/notificationService');
+const { sendLeaveStatusEmail, sendSubstitutionAssignedEmail, createNotification } = require('../services/notificationService');
 const User = require('../models/User');
 const { logAction } = require('../utils/auditLogger');
 
@@ -41,6 +41,25 @@ exports.applyLeave = async (req, res) => {
     });
 
     await leaveRequest.save();
+
+    // Create notification for admin about new leave request
+    const teacher = await User.findById(teacherId);
+    const adminUsers = await User.find({ schoolId, role: 'admin' });
+    for (const admin of adminUsers) {
+      await createNotification(admin._id, {
+        type: 'leave_request',
+        title: 'New Leave Request',
+        message: `${teacher.name} has submitted a leave request from ${new Date(fromDate).toLocaleDateString()} to ${new Date(toDate).toLocaleDateString()}. Reason: ${reason}`,
+        data: {
+          leaveId: leaveRequest._id,
+          teacherId: teacherId,
+          teacherName: teacher.name,
+          fromDate,
+          toDate,
+          reason
+        }
+      });
+    }
 
     res.status(201).json({ message: 'Leave request submitted successfully.', leaveRequest });
   } catch (err) {
@@ -129,6 +148,18 @@ exports.updateLeaveStatus = async (req, res) => {
         adminComment || ''
       );
     }
+
+    // Create notification for the teacher
+    await createNotification(leaveRequest.teacherId, {
+      type: 'leave_request',
+      title: `Leave Request ${status.charAt(0).toUpperCase() + status.slice(1)}`,
+      message: `Your leave request from ${new Date(leaveRequest.fromDate).toLocaleDateString()} to ${new Date(leaveRequest.toDate).toLocaleDateString()} has been ${status}.${adminComment ? ` Admin comment: ${adminComment}` : ''}`,
+      data: {
+        leaveId: leaveRequest._id,
+        status,
+        adminComment
+      }
+    });
 
     // 🔥 AUTO-SUBSTITUTION: Generate substitutions when leave is approved
     if (status === 'approved') {
