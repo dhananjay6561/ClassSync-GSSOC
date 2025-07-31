@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
 import { FiUsers, FiClipboard, FiAlertTriangle, FiArrowRight, FiInfo } from 'react-icons/fi';
+import { useTheme } from '../../context/ThemeContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
@@ -9,15 +10,16 @@ const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088fe', '#00c49f'
 
 const TooltipIcon = ({ text }) => (
   <div className="relative group">
-    <FiInfo className="h-4 w-4 text-gray-400 cursor-pointer" />
-    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs p-3 bg-white text-gray-600 text-xs rounded-lg shadow-xl border border-gray-200 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+    <FiInfo className="h-4 w-4 text-gray-400 dark:text-white cursor-pointer" />
+    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs p-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-white text-xs rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
       {text}
-      <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-white"></div>
+      <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-white dark:border-t-gray-800"></div>
     </div>
   </div>
 );
 
 const AdminDashboard = () => {
+  const { isDarkMode } = useTheme();
   const [stats, setStats] = useState({
     totalTeachers: 0,
     totalSchedules: 0,
@@ -61,16 +63,16 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <p className="text-lg">Loading Admin Dashboard...</p>
+      <div className="flex justify-center items-center h-64 bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+        <p className="text-lg text-gray-950 dark:text-gray-100">Loading Admin Dashboard...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-10">
-        <p className="text-red-500">{error}</p>
+      <div className="text-center py-10 bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+        <p className="text-red-500 dark:text-red-400">{error}</p>
       </div>
     );
   }
@@ -78,44 +80,44 @@ const AdminDashboard = () => {
   const leaveStatusData = Object.entries(stats.charts.leaveStatusDistribution || {}).map(([name, value]) => ({ name, value }));
 
   return (
-    <div className="p-4 md:p-8">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 md:mb-8">Admin Dashboard</h1>
+    <div className="p-4 md:p-8 bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-950 dark:text-gray-400 mb-6 md:mb-8">Admin Dashboard</h1>
 
       {/* Top summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
         {/* Card 1 */}
-        <Card>
+        <Card className="bg-white dark:bg-gray-950 transition-colors duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Teachers</CardTitle>
-            <FiUsers className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium dark:text-white">Total Teachers</CardTitle>
+            <FiUsers className="h-4 w-4 text-gray-400 dark:text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.totalTeachers}</div>
-            <p className="text-xs text-muted-foreground">Active teachers in the school</p>
+            <div className="text-2xl font-bold dark:text-gray-500">{stats.totalTeachers}</div>
+            <p className="text-xs text-gray-400 dark:text-white">Active teachers in the school</p>
           </CardContent>
         </Card>
 
         {/* Card 2 */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Scheduled Periods</CardTitle>
-            <FiClipboard className="h-4 w-4 text-muted-foreground" />
+        <Card className="dark:bg-gray-950">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 ">
+            <CardTitle className="text-sm font-medium dark:text-white">Total Scheduled Periods</CardTitle>
+            <FiClipboard className="h-4 w-4 text-gray-400 dark:text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.totalSchedules}</div>
-            <p className="text-xs text-muted-foreground">Periods scheduled this week</p>
+            <div className="text-2xl font-bold dark:text-gray-500">{stats.totalSchedules}</div>
+            <p className="text-xs text-muted-foreground dark:text-white">Periods scheduled this week</p>
           </CardContent>
         </Card>
 
         {/* Card 3 */}
-        <Card>
+        <Card className="dark:bg-gray-950">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Leaves</CardTitle>
-            <FiAlertTriangle className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium dark:text-white">Pending Leaves</CardTitle>
+            <FiAlertTriangle className="h-4 w-4 text-gray-400 dark:text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.pendingLeaves || 0}</div>
-            <Link to="/admin/manage-leaves" className="text-xs text-muted-foreground hover:underline">
+            <div className="text-2xl font-bold dark:text-gray-500">{stats.pendingLeaves || 0}</div>
+            <Link to="/admin/manage-leaves" className="text-xs text-muted-foreground hover:underline dark:text-white">
               Review leave requests
             </Link>
           </CardContent>
@@ -126,7 +128,7 @@ const AdminDashboard = () => {
       <div className="mt-10 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {/* Weekly Load */}
         <Card className="md:col-span-2 lg:col-span-2">
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between dark:text-[#82ca9d] dark:bg-gray-950">
             <CardTitle>Weekly Load</CardTitle>
             <TooltipIcon text={
               <>
@@ -135,7 +137,7 @@ const AdminDashboard = () => {
               </>
             } />
           </CardHeader>
-          <CardContent>
+          <CardContent className="bg-gray-950">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={Object.entries(stats.charts.weeklyLoad || {}).map(([name, value]) => ({ name, value }))}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -150,7 +152,7 @@ const AdminDashboard = () => {
 
         {/* Subject Distribution */}
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between dark:text-[#8884d8]">
             <CardTitle>Subject Distribution</CardTitle>
             <TooltipIcon text={
               <>
@@ -174,7 +176,7 @@ const AdminDashboard = () => {
 
         {/* Leave Status Pie */}
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between dark:text-[#9290C3]">
             <CardTitle>Leave Status</CardTitle>
             <TooltipIcon text={
               <>
@@ -218,4 +220,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdminDashboard; 

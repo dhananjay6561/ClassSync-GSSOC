@@ -4,7 +4,7 @@ import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../logo.svg';
-
+import { useTheme } from '../../context/ThemeContext';
 
 const demoUsers = [
   {
@@ -24,6 +24,7 @@ const demoUsers = [
 ];
 
 const Login = () => {
+  const { isDarkMode } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -70,26 +71,30 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-sm sm:max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-xl border-0 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-sm sm:max-w-md bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex justify-center mb-6 sm:mb-8">
+<div className="bg-white p-2 rounded-xl shadow-lg">
   <img
     src="logo.svg"
     alt="App Logo"
-    className="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-xl shadow-lg"
+    className="w-14 h-14 sm:w-16 sm:h-16 object-contain"
   />
+</div>
+
 </div>
 
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-xl sm:text-2xl font-semibold text-indigo-600 mb-2">Welcome Back</h1>
-            <p className="text-gray-600 text-sm">Sign in to your account</p>
+            <h1 className="text-xl sm:text-2xl font-semibold text-indigo-600 mb-2 dark:text-white-900">Welcome Back</h1>
+            <p className="text-gray-600 dark:text-white text-sm">Sign in to your account</p>
+
           </div>
 
           {/* Demo User Selection */}
           <div className="mb-6">
-            <p className="text-gray-700 text-center mb-4 font-medium text-sm sm:text-base">Login as Demo User</p>
+            <p className="text-gray-700 text-center mb-4 font-medium text-sm sm:text-base  dark:text-white">Login as Demo User</p>
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {demoUsers.map((user) => (
                 <button
@@ -98,11 +103,11 @@ const Login = () => {
                   className={`p-3 sm:p-4 border rounded-lg sm:rounded-xl text-center transition-all duration-200 hover:scale-105 ${
                     selectedRole === user.role
                       ? "border-indigo-600 bg-indigo-50 shadow-md"
-                      : "border-gray-200 hover:border-gray-300 hover:shadow-sm"
+                      : "border-gray-200 hover:border-gray-300 hover:shadow-sm  dark:border-white"
                   }`}
                 >
                   <user.icon className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-gray-600" />
-                  <p className="text-xs sm:text-sm font-medium text-gray-700">{user.label}</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-700  dark:text-white">{user.label}</p>
                 </button>
               ))}
             </div>
@@ -121,15 +126,23 @@ const Login = () => {
             <div>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 h-11 sm:h-12 border border-gray-200 rounded-lg sm:rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 focus:outline-none transition-all duration-200 text-sm sm:text-base"
-                  required
-                  disabled={isLoading}
-                />
+            <input
+              type="email"
+              placeholder="name@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full pl-10 pr-4 h-11 sm:h-12 
+                        border border-gray-200 dark:border-gray-700 
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-white 
+                        placeholder-gray-400 dark:placeholder-gray-500 
+                        rounded-lg sm:rounded-xl 
+                        focus:border-indigo-400 dark:focus:border-indigo-300 
+                        focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-300 
+                        focus:outline-none 
+                        transition-all duration-200 text-sm sm:text-base"
+            />
+
               </div>
               <p className="text-xs text-gray-500 mt-1 ml-1">Email</p>
             </div>
@@ -143,7 +156,16 @@ const Login = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 h-11 sm:h-12 border border-gray-200 rounded-lg sm:rounded-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 focus:outline-none transition-all duration-200 text-sm sm:text-base"
+                  className="w-full pl-10 pr-4 h-11 sm:h-12 
+                        border border-gray-200 dark:border-gray-700 
+                        bg-white dark:bg-gray-800 
+                        text-gray-900 dark:text-white 
+                        placeholder-gray-400 dark:placeholder-gray-500 
+                        rounded-lg sm:rounded-xl 
+                        focus:border-indigo-400 dark:focus:border-indigo-300 
+                        focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-300 
+                        focus:outline-none 
+                        transition-all duration-200 text-sm sm:text-base"
                   required
                   disabled={isLoading}
                 />

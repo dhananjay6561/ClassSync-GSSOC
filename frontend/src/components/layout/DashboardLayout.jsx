@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import {
   FiHome, FiUser, FiSettings, FiLogOut, FiHelpCircle, FiBell,
   FiUsers, FiCalendar, FiRepeat, FiBookOpen, FiClipboard, FiInfo,
-  FiMenu, FiX
+  FiMenu, FiX, FiMoon, FiSun
 } from 'react-icons/fi';
 import logo from '../../logo.svg';
 
@@ -18,6 +19,7 @@ const Dummy = ({ title }) => (
 
 const DashboardLayout = ({ children }) => {
   const { user, logout } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -73,11 +75,11 @@ const DashboardLayout = ({ children }) => {
   );
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden transition-colors duration-300">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-64 flex-shrink-0 bg-white border-r border-gray-200 flex-col justify-between">
+      <aside className="hidden md:flex w-64 flex-shrink-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex-col justify-between">
         <div>
-          <div className="h-16 flex items-center justify-center border-b border-gray-100">
+          <div className="h-16 flex items-center justify-center border-b border-gray-100 dark:border-gray-700">
   <div
     className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
     title="ClassSync"
@@ -96,8 +98,8 @@ const DashboardLayout = ({ children }) => {
             {user?.name?.charAt(0).toUpperCase() || 'U'}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-semibold text-gray-900 truncate">{user?.name}</div>
-            <div className="text-xs text-gray-500 truncate">{user?.email}</div>
+            <div className="font-semibold text-gray-900 dark:text-gray-100 truncate">{user?.name}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</div>
           </div>
           <button onClick={handleLogout} title="Logout" className="ml-2 text-red-500 hover:text-red-700">
             <FiLogOut size={20} />
@@ -108,9 +110,9 @@ const DashboardLayout = ({ children }) => {
       {/* Sidebar - Mobile */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
-          <div className="w-64 bg-white shadow-lg flex flex-col justify-between border-r border-gray-200">
+          <div className={`w-64 bg-white dark:bg-gray-900 shadow-lg z-50 fixed inset-y-0 left-0 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out`}>
             <div>
-              <div className="h-16 flex items-center justify-between px-4 border-b">
+              <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="h-16 flex items-center justify-center border-b border-gray-100">
   <div
     className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
@@ -124,18 +126,18 @@ const DashboardLayout = ({ children }) => {
   </div>
 </div>
                 <button onClick={() => setSidebarOpen(false)}>
-                  <FiX size={24} className="text-gray-600" />
+                  <FiX size={24} className="text-gray-600 dark:text-gray-100" />
                 </button>
               </div>
               <nav className="mt-6 flex flex-col gap-1 px-4">{renderNavLinks()}</nav>
             </div>
-            <div className="p-4 border-t border-gray-100 flex items-center gap-3">
+            <div className="p-4 border-t border-gray-100 flex items-center gap-3 dark:bg-gray-900">
               <div className="w-12 h-12 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xl font-bold">
                 {user?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-gray-900 truncate">{user?.name}</div>
-                <div className="text-xs text-gray-500 truncate">{user?.email}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</div>
               </div>
               <button onClick={handleLogout} title="Logout" className="ml-2 text-red-500 hover:text-red-700">
                 <FiLogOut size={20} />
@@ -149,12 +151,12 @@ const DashboardLayout = ({ children }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <header className="h-16 bg-white border-b flex items-center justify-between px-4 md:px-8">
-          <button onClick={() => setSidebarOpen(true)} className="md:hidden text-gray-600">
+        <header className="h-16 bg-white border-b flex items-center justify-between px-4 md:px-8 dark:bg-gray-950 dark:border-b-gray-700">
+          <button onClick={() => setSidebarOpen(true)} className="md:hidden text-gray-700 dark:text-gray-100">
             <FiMenu size={24} />
           </button>
           <div className="flex items-center gap-6 ml-auto">
-            <button className="relative text-gray-600 hover:text-gray-800">
+            <button className="relative text-gray-600 hover:text-gray-800 dark:text-gray-400">
               <FiBell size={24} />
               <span className="absolute top-0 right-0 w-2 h-2 bg-indigo-500 rounded-full"></span>
             </button>
@@ -162,7 +164,7 @@ const DashboardLayout = ({ children }) => {
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4 md:p-6">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-950 p-4 md:p-6">
           {children}
         </main>
       </div>
