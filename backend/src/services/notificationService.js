@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const Notification = require('../models/Notification');
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
@@ -65,10 +66,10 @@ async function sendSubstitutionAssignedEmail(substituteEmail, substituteName, sl
   const weekdayMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const readableWeekday = weekdayMap[weekday];
 
-  const subjectLine = `You’ve been assigned as substitute on ${readableWeekday}, Period ${periodIndex + 1}`;
+  const subjectLine = `You've been assigned as substitute on ${readableWeekday}, Period ${periodIndex + 1}`;
   const html = `
     <p>Hi ${substituteName},</p>
-    <p>You’ve been assigned to take a substitution class.</p>
+    <p>You've been assigned to take a substitution class.</p>
     <ul>
       <li><strong>Date:</strong> ${dateString}</li>
       <li><strong>Weekday:</strong> ${readableWeekday}</li>
@@ -114,10 +115,31 @@ ClassSync
   });
 }
 
+/**
+ * Create a notification in the database
+ * @param {string} userId - The user ID to create notification for
+ * @param {object} notificationData - The notification data
+ */
+async function createNotification(userId, notificationData) {
+  try {
+    const notification = new Notification({
+      userId,
+      ...notificationData
+    });
+    
+    await notification.save();
+    return notification;
+  } catch (error) {
+    console.error('Error creating notification:', error);
+    throw error;
+  }
+}
+
 module.exports = {
   sendLeaveStatusEmail,
   sendSubstitutionAssignedEmail,
   sendConflictSummaryEmail,
+  createNotification,
 };
 
 // This module provides functions to send email notifications related to leave requests and substitutions.
