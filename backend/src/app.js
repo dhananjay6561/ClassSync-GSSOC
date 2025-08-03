@@ -62,6 +62,12 @@ app.use('/api/conflicts', conflictRoutes);
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
 
+const studentRoutes = require('./routes/studentRoutes');
+app.use('/api/student', studentRoutes);
+
+const teacherRoutes = require('./routes/teacherRoutes');
+app.use('/api/teacher', teacherRoutes);
+
 
 
 module.exports = app;
