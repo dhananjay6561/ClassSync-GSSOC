@@ -24,8 +24,16 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'teacher'],
+    enum: ['admin', 'teacher', 'student'],
     default: 'teacher',
+  },
+  classSection: {
+    type: String,
+    required: function() { return this.role === 'student'; },
+  },
+  rollNumber: {
+    type: String,
+    required: function() { return this.role === 'student'; },
   },
   isActive: {
     type: Boolean,

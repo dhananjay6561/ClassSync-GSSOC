@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Lock, GraduationCap, Shield } from 'lucide-react';
-import api from '../../utils/api';
+import api from './utils/api';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import logo from '../../../public/logo.svg';
+import { useAuth } from './context/AuthContext';
 
 
 const demoUsers = [

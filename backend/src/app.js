@@ -35,8 +35,13 @@ app.use('/api/auth', authRoutes);
 const schoolRoutes = require('./routes/schoolRoutes');
 app.use('/api/schools', schoolRoutes);
 
-// 🔒 Protected Routes (WITH auth & context)
-app.use(auth); // ← Only from this point on
+// Protected Routes (WITH auth only)
+app.use(auth);
+
+const notificationRoutes = require('./routes/notificationRoutes');
+app.use('/api/notifications', notificationRoutes);
+
+// Protected Routes (WITH auth & context)
 app.use(schoolContext);
 
 const scheduleRoutes = require('./routes/scheduleRoutes');
@@ -56,6 +61,12 @@ app.use('/api/conflicts', conflictRoutes);
 
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/admin', adminRoutes);
+
+const studentRoutes = require('./routes/studentRoutes');
+app.use('/api/student', studentRoutes);
+
+const teacherRoutes = require('./routes/teacherRoutes');
+app.use('/api/teacher', teacherRoutes);
 
 
 
