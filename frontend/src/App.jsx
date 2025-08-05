@@ -12,7 +12,7 @@ import ManageLeaves from './pages/admin/ManageLeaves';
 import MyLeave from './pages/teacher/MyLeave';
 import AdminSubstitutions from './pages/admin/Substitutions';
 import TeacherSubstitutions from './pages/teacher/Substitutions';
-import Footer from './components/ui/Footer';
+import Footer from './components/ui/Footer'; // This import is already correct
 import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
@@ -110,24 +110,24 @@ function ParticleBackground() {
 // Landing Page Component
 function LandingPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <ParticleBackground />
       
       {/* Navigation */}
       <nav className="relative z-10 px-4 sm:px-6 lg:px-8 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
          <div className="h-16 flex items-center justify-center border-b border-gray-100">
-  <div
-    className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
-    title="ClassSync"
-  >
-    <img
-      src={logo}
-      alt="ClassSync Logo"
-      className="w-full h-full object-contain rounded-full"
-    />
-  </div>
-</div>
+          <div
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white shadow hover:scale-110 hover:rotate-6 transition-transform duration-300 ease-in-out cursor-pointer"
+            title="ClassSync"
+          >
+            <img
+              src={logo}
+              alt="ClassSync Logo"
+              className="w-full h-full object-contain rounded-full"
+            />
+          </div>
+        </div>
           
           <Link 
             to="/login"
@@ -140,7 +140,7 @@ function LandingPage() {
       </nav>
       
       {/* Main Content */}
-      <main className="relative z-10 px-4 sm:px-6 lg:px-8">
+      <main className="relative z-10 px-4 sm:px-6 lg:px-8 flex-grow">
         <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-24 lg:pt-32">
           {/* Hero Section */}
           <div className="space-y-8">
@@ -196,7 +196,8 @@ function LandingPage() {
         </div>
       </main>
       
-      <Footer/>
+      {/* Footer is now properly included at the bottom of landing page */}
+      <Footer />
     </div>
   );
 }
@@ -204,109 +205,108 @@ function LandingPage() {
 function App() {
   return (
     <>
-      <Chatbot />
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
 
         {/* Landing page with professional design */}
-      <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
 
-      {/* Protected teacher routes */}
-      <Route 
-        path="/teacher/dashboard" 
-        element={
-          <ProtectedRoute allowedRoles={['teacher']}>
-            <DashboardLayout>
-              <TeacherDashboard />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/teacher/my-schedule" 
-        element={
-          <ProtectedRoute allowedRoles={['teacher']}>
-            <DashboardLayout>
-              <TeacherDashboard />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/teacher/apply-leave" 
-        element={
-          <ProtectedRoute allowedRoles={['teacher']}>
-            <DashboardLayout>
-              <MyLeave />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/teacher/substitutions" 
-        element={
-          <ProtectedRoute allowedRoles={['teacher']}>
-            <DashboardLayout>
-              <TeacherSubstitutions />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      
-      {/* Protected admin routes */}
-      <Route 
-        path="/admin/dashboard" 
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-             <DashboardLayout>
-              <AdminDashboard />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-       <Route 
-        path="/admin/teacher-schedule/:teacherId" 
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-             <DashboardLayout>
-              <ScheduleEditor />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/admin/manage-teachers" 
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-             <DashboardLayout>
-              <ManageTeachersPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/admin/manage-leaves" 
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-             <DashboardLayout>
-              <ManageLeaves />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-      <Route 
-        path="/admin/substitutions" 
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <DashboardLayout>
-              <AdminSubstitutions />
-            </DashboardLayout>
-          </ProtectedRoute>
-        } 
-      />
-    </Routes>
-    <Chatbot />
+        {/* Protected teacher routes */}
+        <Route 
+          path="/teacher/dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['teacher']}>
+              <DashboardLayout>
+                <TeacherDashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/teacher/my-schedule" 
+          element={
+            <ProtectedRoute allowedRoles={['teacher']}>
+              <DashboardLayout>
+                <TeacherDashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/teacher/apply-leave" 
+          element={
+            <ProtectedRoute allowedRoles={['teacher']}>
+              <DashboardLayout>
+                <MyLeave />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/teacher/substitutions" 
+          element={
+            <ProtectedRoute allowedRoles={['teacher']}>
+              <DashboardLayout>
+                <TeacherSubstitutions />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        
+        {/* Protected admin routes */}
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <DashboardLayout>
+                <AdminDashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/teacher-schedule/:teacherId" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <DashboardLayout>
+                <ScheduleEditor />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/manage-teachers" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <DashboardLayout>
+                <ManageTeachersPage />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/manage-leaves" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <DashboardLayout>
+                <ManageLeaves />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/substitutions" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <DashboardLayout>
+                <AdminSubstitutions />
+              </DashboardLayout>
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+      <Chatbot />
     </>
   );
 }
