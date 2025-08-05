@@ -1,5 +1,5 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BookOpen, Users, Calendar, LogIn } from 'lucide-react';
 import Login from './pages/auth/Login';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
@@ -16,7 +16,6 @@ import Footer from './components/ui/Footer';
 import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
-
 // Particle Background Component
 function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -106,7 +105,48 @@ function ParticleBackground() {
     />
   );
 }
-
+//heading dynamic
+ function TypewriterHeader() {
+  const text = 'Smart School Management System';
+  const [display, setdisplay] = useState('');
+  const [index, setindex] = useState(0);
+const[done,setdone]=useState(false);
+  useEffect(() => {
+    if (index < text.length) {
+      const timeout = setTimeout(() => {
+        setdisplay(prev => prev + text.charAt(index));
+        setindex(prev => prev + 1);
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+    else{
+      setdone(true);
+    }
+  }, [index, text]);
+          
+           return (
+    <div className="space-y-8">
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+        {display}
+        {!done && <span className="blinking-cursor text-indigo-600">|</span>}
+      </h1>
+            
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Streamline teacher schedules, manage substitutions, and track leave applications 
+              with our comprehensive school management platform.
+            </p>
+            
+            <div className="pt-8">
+              <Link 
+                to="/login"
+                className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+              >
+                <span>Get Started</span>
+                <LogIn className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+           );}
 // Landing Page Component
 function LandingPage() {
   return (
@@ -138,33 +178,11 @@ function LandingPage() {
           </Link>
         </div>
       </nav>
-      
       {/* Main Content */}
       <main className="relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-24 lg:pt-32">
           {/* Hero Section */}
-          <div className="space-y-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Smart School
-              <span className="block text-indigo-600">Management System</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Streamline teacher schedules, manage substitutions, and track leave applications 
-              with our comprehensive school management platform.
-            </p>
-            
-            <div className="pt-8">
-              <Link 
-                to="/login"
-                className="inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-              >
-                <span>Get Started</span>
-                <LogIn className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-          
+        <TypewriterHeader/>
           {/* Features */}
           <div className="pt-20 sm:pt-24">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
