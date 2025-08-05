@@ -252,7 +252,7 @@ useEffect(() => {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @keyframes animate-in {
           0% {
             opacity: 0;
