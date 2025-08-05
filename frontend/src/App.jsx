@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
 import ScheduleEditor from './pages/admin/ScheduleEditor';
 import ManageTeachersPage from './pages/admin/ManageTeachers';
+import ManageStudents from './pages/admin/ManageStudents';
 import ManageLeaves from './pages/admin/ManageLeaves';
 import MyLeave from './pages/teacher/MyLeave';
 import AdminSubstitutions from './pages/admin/Substitutions';
@@ -281,6 +282,16 @@ function App() {
           <ProtectedRoute allowedRoles={['admin']}>
              <DashboardLayout>
               <ManageTeachersPage />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/admin/manage-students" 
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+             <DashboardLayout>
+              <ManageStudents />
             </DashboardLayout>
           </ProtectedRoute>
         } 

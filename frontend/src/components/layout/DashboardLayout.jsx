@@ -66,6 +66,9 @@ const DashboardLayout = ({ children }) => {
           <NavLink to="/admin/manage-teachers" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
             <FiUsers /> Teachers
           </NavLink>
+          <NavLink to="/admin/manage-students" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
+            <FiUsers /> Students
+          </NavLink>
           <NavLink to="/admin/manage-leaves" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
             <FiClipboard /> Leave Requests
           </NavLink>
