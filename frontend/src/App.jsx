@@ -16,6 +16,7 @@ import Footer from './components/ui/Footer';
 import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
+import Testimonials from './components/ui/Testimonials';
 
 // Particle Background Component
 function ParticleBackground() {
@@ -145,7 +146,7 @@ function LandingPage() {
           {/* Hero Section */}
           <div className="space-y-8">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Smart School
+              Smart School 
               <span className="block text-indigo-600">Management System</span>
             </h1>
             
@@ -194,8 +195,10 @@ function LandingPage() {
             </div>
           </div>
         </div>
+        <div className='max-w-4xl mx-auto text-center pt-16 sm:pt-24 lg:pt-32'>
+          <Testimonials></Testimonials>
+        </div>
       </main>
-      
       <Footer/>
     </div>
   );
@@ -307,6 +310,7 @@ function App() {
       />
     </Routes>
     <Chatbot />
+
     </>
   );
 }
