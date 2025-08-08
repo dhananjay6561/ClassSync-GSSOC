@@ -17,6 +17,7 @@ import './App.css';
 import logo from './logo.svg'; 
 import Chatbot from './components/Chatbot';
 // Particle Background Component
+//removed typing effect
 function ParticleBackground() {
   const canvasRef = useRef(null);
   
