@@ -293,7 +293,7 @@ const StudentList = () => {
     setIsViewLoading(true);
     try {
       const response = await api.get(`/api/admin/students/${student._id}`);
-      setStudentDetails(response.data);
+      setStudentDetails(response.data.student);
     } catch (err) {
       console.error('Failed to fetch student details:', err);
       setStudentDetails(null);
