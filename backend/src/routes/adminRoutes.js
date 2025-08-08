@@ -12,7 +12,8 @@ const {
   getAllStudents,
   createStudent,
   updateStudent,
-  deleteStudent
+  deleteStudent,
+  getStudentDetails
 } = require('../controllers/adminController');
 
 // All routes in this file are protected and for admins only
@@ -64,5 +65,10 @@ router.put('/students/:id', updateStudent);
 // @desc    Delete a student
 // @access  Admin
 router.delete('/students/:id', deleteStudent);
+
+// @route   GET /api/admin/students/:id
+// @desc    Get a single student's details
+// @access  Admin
+router.get('/students/:id', getStudentDetails);
 
 module.exports = router;
