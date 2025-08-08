@@ -11,6 +11,7 @@ import ManageTeachersPage from './pages/admin/ManageTeachers';
 import ManageStudents from './pages/admin/ManageStudents';
 import ManageLeaves from './pages/admin/ManageLeaves';
 import MyLeave from './pages/teacher/MyLeave';
+import MyStudents from './pages/teacher/MyStudents';
 import AdminSubstitutions from './pages/admin/Substitutions';
 import TeacherSubstitutions from './pages/teacher/Substitutions';
 import Footer from './components/ui/Footer';
@@ -250,6 +251,16 @@ function App() {
           <ProtectedRoute allowedRoles={['teacher']}>
             <DashboardLayout>
               <TeacherSubstitutions />
+            </DashboardLayout>
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/teacher/my-students" 
+        element={
+          <ProtectedRoute allowedRoles={['teacher']}>
+            <DashboardLayout>
+              <MyStudents />
             </DashboardLayout>
           </ProtectedRoute>
         } 

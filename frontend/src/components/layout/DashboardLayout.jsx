@@ -88,6 +88,9 @@ const DashboardLayout = ({ children }) => {
           <NavLink to="/teacher/substitutions" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
             <FiRepeat /> Substitutions
           </NavLink>
+          <NavLink to="/teacher/my-students" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
+            <FiUsers /> My Students
+          </NavLink>
         </>
       )}
     </>

@@ -243,3 +243,21 @@ exports.deleteStudent = async (req, res) => {
     res.status(500).json({ message: 'Failed to delete student.' });
   }
 };
+
+// Get a single student's details
+exports.getStudentDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const schoolId = req.schoolId;
+
+    const student = await User.findOne({ _id: id, schoolId, role: 'student' }).select('-password');
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found.' });
+    }
+
+    res.json({ student });
+  } catch (err) {
+    console.error('Get Student Details Error:', err);
+    res.status(500).json({ message: 'Failed to fetch student details.' });
+  }
+};
