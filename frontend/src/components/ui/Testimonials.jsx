@@ -1,6 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Navigation, Pagination ,Autoplay} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
@@ -51,7 +51,7 @@ const Testimonial = () => {
         }}
         speed={300}
         pagination={{ clickable: true }}
-        modules={[EffectCoverflow, Pagination,Navigation]}
+        modules={[EffectCoverflow, Pagination,Navigation,Autoplay]}
         className="w-full max-w-4xl"
         loop={true}
         navigation={true}
