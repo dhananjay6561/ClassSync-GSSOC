@@ -1,9 +1,10 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import b from '../../assets/b2.jpg';
 import g from '../../assets/pic-girl.jpg';
 import b11 from '../../assets/b1.avif';
@@ -31,6 +32,10 @@ const Testimonial = () => {
         Testimonials
       </h1>
     </div>
+    <div className="swiper-button-prev !absolute !top-1/2 !-left-10 !-translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-10"></div>
+
+    <div className="swiper-button-next !absolute !top-1/2 !-right-10 !-translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-10"></div>
+
     <div className='h-100'>
       <Swiper
         effect={'coverflow'}
@@ -46,9 +51,15 @@ const Testimonial = () => {
         }}
         speed={300}
         pagination={{ clickable: true }}
-        modules={[EffectCoverflow, Pagination]}
+        modules={[EffectCoverflow, Pagination,Navigation]}
         className="w-full max-w-4xl"
         loop={true}
+        navigation={true}
+        autoplay={{
+          delay:1500,
+          disableOnInteraction:false,
+
+        }}
       >
         {testimonials.map((testimonial) => (
           <SwiperSlide
