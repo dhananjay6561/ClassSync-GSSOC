@@ -73,6 +73,20 @@ ClassSync/
 
 ---
 
+## First-Time Here? 👋
+
+If this is your first time contributing to an open-source project, don’t worry — you can start small!  
+Here’s a quick, simple path you can follow:
+
+1. **Fork** this repository to your own GitHub account.
+2. **Create a new branch** for your changes.
+3. **Make your edits** — even small fixes like improving documentation or styling are valuable.
+4. **Commit** your changes and push them to your fork.
+5. **Open a Pull Request (PR)** so we can review and merge your work.
+
+💡 Tip: You don’t need to understand the whole codebase to contribute — starting with documentation or minor improvements is a great way to learn.
+For a more detailed guide, please see our [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
 ## 🤝 Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
