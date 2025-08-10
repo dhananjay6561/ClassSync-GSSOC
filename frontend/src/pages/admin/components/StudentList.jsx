@@ -31,7 +31,7 @@ const ViewStudentModal = ({ isOpen, onClose, student, loading }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white p-4 sm:p-6 rounded-lg shadow-xl max-w-sm w-full mx-4 relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
-          <FiX size={24}/>
+          <FiX size={24} />
         </button>
         {loading ? (
           <p className="text-center py-8">Loading details...</p>
@@ -74,7 +74,7 @@ const EditStudentModal = ({ isOpen, onClose, onSave, student }) => {
       setRollNumber(student.rollNumber);
     }
   }, [student]);
-  
+
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
@@ -140,7 +140,7 @@ const AddStudentModal = ({ isOpen, onClose, onSave }) => {
   const [password, setPassword] = useState('');
   const [classSection, setClassSection] = useState('');
   const [rollNumber, setRollNumber] = useState('');
-  
+
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
@@ -172,8 +172,8 @@ const AddStudentModal = ({ isOpen, onClose, onSave }) => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm sm:text-base" required
             />
           </div>
-           <div className="mb-4">
-            <label htmlFor="add-password"className="block text-sm font-medium text-gray-700 mb-1">Initial Password</label>
+          <div className="mb-4">
+            <label htmlFor="add-password" className="block text-sm font-medium text-gray-700 mb-1">Initial Password</label>
             <input
               type="password" id="add-password" value={password} onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm sm:text-base" required
@@ -207,11 +207,42 @@ const AddStudentModal = ({ isOpen, onClose, onSave }) => {
   );
 };
 
+const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  if (pageNumbers.length <= 1) {
+    return null;
+  }
+
+  return (
+    <nav className="mt-6 flex justify-center">
+      <ul className="inline-flex items-center -space-x-px">
+        {pageNumbers.map(number => (
+          <li key={number}>
+            <button
+              onClick={() => paginate(number)}
+              className={`px-3 py-2 leading-tight border border-gray-300 ${currentPage === number
+                ? 'bg-indigo-600 text-white'
+                : 'bg-white text-gray-500 hover:bg-gray-100'
+                }`}
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [studentToDelete, setStudentToDelete] = useState(null);
 
@@ -225,6 +256,12 @@ const StudentList = () => {
   const [isViewLoading, setIsViewLoading] = useState(false);
 
   const [search, setSearch] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -253,7 +290,14 @@ const StudentList = () => {
 
     try {
       await api.delete(`/api/admin/students/${studentToDelete._id}`);
-      setStudents(prev => prev.filter(s => s._id !== studentToDelete._id));
+      setStudents(prev => {
+        const newStudents = prev.filter(s => s._id !== studentToDelete._id);
+        const totalPages = Math.ceil(newStudents.length / itemsPerPage);
+        if (currentPage > totalPages && totalPages > 0) {
+          setCurrentPage(totalPages);
+        }
+        return newStudents;
+      });
       setIsDeleteModalOpen(false);
       setStudentToDelete(null);
     } catch (err) {
@@ -307,18 +351,22 @@ const StudentList = () => {
     s.email.toLowerCase().includes(search.toLowerCase())
   );
 
+  const indexOfLastStudent = currentPage * itemsPerPage;
+  const indexOfFirstStudent = indexOfLastStudent - itemsPerPage;
+  const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+
   if (loading) return <p className="text-center text-gray-500 py-8">Loading students...</p>;
   if (error) return <p className="text-center text-red-500 py-8">{error}</p>;
 
   return (
     <>
-      <ConfirmationModal 
+      <ConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
         message={`Are you sure you want to delete ${studentToDelete?.name}? This action cannot be undone.`}
       />
-      <EditStudentModal 
+      <EditStudentModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         onSave={handleSaveChanges}
@@ -329,7 +377,7 @@ const StudentList = () => {
         onClose={() => setIsAddModalOpen(false)}
         onSave={handleAddStudent}
       />
-      <ViewStudentModal 
+      <ViewStudentModal
         isOpen={isViewModalOpen}
         onClose={() => setIsViewModalOpen(false)}
         student={studentDetails}
@@ -339,7 +387,7 @@ const StudentList = () => {
         <div className="flex flex-col space-y-4 mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Student List</h2>
-            <button 
+            <button
               onClick={() => setIsAddModalOpen(true)}
               className="flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm sm:text-base self-start sm:self-auto"
             >
@@ -347,7 +395,7 @@ const StudentList = () => {
               Add Student
             </button>
           </div>
-          
+
           <div className="grid grid-cols-1">
             <input
               type="text"
@@ -371,28 +419,28 @@ const StudentList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.map(student => (
+              {currentStudents.map(student => (
                 <tr key={student._id} className="border-b hover:bg-gray-50">
                   <td className="p-4 text-sm font-medium">{student.name}</td>
                   <td className="p-4 text-sm text-gray-600">{student.email}</td>
                   <td className="p-4 text-sm text-gray-600">{student.classSection}</td>
                   <td className="p-4 text-sm text-gray-600">{student.rollNumber}</td>
                   <td className="p-4 flex justify-end space-x-2">
-                    <button 
+                    <button
                       onClick={() => handleViewClick(student)}
                       className="p-2 text-gray-500 hover:text-indigo-600 rounded-full hover:bg-gray-100"
                       title="View Details"
                     >
                       <FiEye size={16} />
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleEditClick(student)}
                       className="p-2 text-gray-500 hover:text-blue-600 rounded-full hover:bg-gray-100"
                       title="Edit Student"
                     >
                       <FiEdit size={16} />
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleDeleteClick(student)}
                       className="p-2 text-gray-500 hover:text-red-600 rounded-full hover:bg-gray-100"
                       title="Delete Student"
@@ -408,6 +456,13 @@ const StudentList = () => {
         {filteredStudents.length === 0 && !loading && (
           <p className="text-center text-gray-500 pt-8">No students found.</p>
         )}
+
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredStudents.length}
+          paginate={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </>
   );
