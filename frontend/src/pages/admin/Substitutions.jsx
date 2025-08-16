@@ -64,29 +64,39 @@ const ClassCoverageManagement = () => {
 
   const weekdayMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(10); // default 10 per page
+  const [totalRecords, setTotalRecords] = useState(0);
+
+
+
   useEffect(() => {
     fetchSubstitutions();
     fetchTeachers(); 
-  }, []);
+  }, [currentPage, limit, dateFilter]);
 
   const fetchSubstitutions = async () => {
-    try {
-      setLoading(true);
-      const params = {};
-      if (dateFilter.from) params.from = dateFilter.from;
-      if (dateFilter.to) params.to = dateFilter.to;
+  try {
+    setLoading(true);
+    const params = {
+      page: currentPage,
+      limit
+    };
+    if (dateFilter.from) params.from = dateFilter.from;
+    if (dateFilter.to) params.to = dateFilter.to;
 
-      const response = await api.get('/api/substitutions/history', { params });
-      setSubstitutions(response.data.history || []);
-      setError('');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to load class coverage data.');
-      console.error(err);
-      setToast({ message: 'Failed to load class coverage data.', type: 'error' });
-    } finally {
-      setLoading(false);
-    }
-  };
+    const response = await api.get('/api/substitutions/history', { params });
+    setSubstitutions(response.data.history || []);
+    setTotalRecords(response.data.total || 0);
+    setError('');
+  } catch (err) {
+    setError(err.response?.data?.message || 'Failed to load class coverage data.');
+    console.error(err);
+    setToast({ message: 'Failed to load class coverage data.', type: 'error' });
+  } finally {
+    setLoading(false);
+  }
+};
 
   const fetchTeachers = async () => {
     try {
@@ -339,6 +349,23 @@ const ClassCoverageManagement = () => {
             </div>
           </div>
         )}
+  
+        <div className="flex items-center justify-end mb-4 space-x-2">
+  <span>Records per page:</span>
+  <select
+    value={limit}
+    onChange={(e) => {
+      setLimit(Number(e.target.value));
+      setCurrentPage(1); // reset to first page
+    }}
+    className="border px-2 py-1 rounded"
+  >
+    <option value={10}>10</option>
+    <option value={20}>20</option>
+    <option value={30}>30</option>
+    <option value={50}>50</option>
+  </select>
+</div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
@@ -470,6 +497,29 @@ const ClassCoverageManagement = () => {
                   </div>
                 )}
               </div>
+
+              <div className="flex justify-center items-center mt-4 space-x-2">
+  <button
+    disabled={currentPage === 1}
+    onClick={() => setCurrentPage(prev => prev - 1)}
+    className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+  >
+    Prev
+  </button>
+
+  <span>
+    Page {currentPage} of {Math.ceil(totalRecords / limit)}
+  </span>
+
+  <button
+    disabled={currentPage >= Math.ceil(totalRecords / limit)}
+    onClick={() => setCurrentPage(prev => prev + 1)}
+    className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+  >
+    Next
+  </button>
+</div>
+
 
               {/* Desktop Table View */}
               <div className="hidden sm:block overflow-x-auto">
