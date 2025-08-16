@@ -47,8 +47,12 @@ const Login = () => {
 
       if (userRole === 'admin') {
         navigate('/admin/dashboard');
-      } else {
+      } else if (userRole === 'teacher') {
         navigate('/teacher/dashboard');
+      } else if (userRole === 'student') {
+        navigate('/student/dashboard');
+      } else {
+        navigate('/');
       }
       
     } catch (err) {

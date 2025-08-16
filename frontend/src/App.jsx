@@ -14,9 +14,12 @@ import MyLeave from './pages/teacher/MyLeave';
 import MyStudents from './pages/teacher/MyStudents';
 import AdminSubstitutions from './pages/admin/Substitutions';
 import TeacherSubstitutions from './pages/teacher/Substitutions';
+import StudentDashboard from './pages/student/StudentDashboard';
+import MyProfile from './pages/student/MyProfile';
+import MySchedule from './pages/student/MySchedule';
 import Footer from './components/ui/Footer';
 import './App.css';
-import logo from './logo.svg'; 
+import logo from './logo.svg';
 import Chatbot from './components/Chatbot';
 
 // Particle Background Component
@@ -326,6 +329,38 @@ function App() {
             </DashboardLayout>
           </ProtectedRoute>
         } 
+      />
+
+      {/* Protected student routes */}
+      <Route
+        path="/student/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <DashboardLayout>
+              <StudentDashboard />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student/my-schedule"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <DashboardLayout>
+              <MySchedule />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student/my-profile"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <DashboardLayout>
+              <MyProfile />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
       />
     </Routes>
     <Chatbot />
