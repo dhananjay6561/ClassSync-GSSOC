@@ -93,6 +93,19 @@ const DashboardLayout = ({ children }) => {
           </NavLink>
         </>
       )}
+      {user?.role === 'student' && (
+        <>
+          <NavLink to="/student/dashboard" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
+            <FiHome /> Dashboard
+          </NavLink>
+          <NavLink to="/student/my-schedule" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
+            <FiCalendar /> My Schedule
+          </NavLink>
+          <NavLink to="/student/my-profile" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-indigo-50 text-indigo-600 font-semibold' : 'text-gray-700 hover:bg-gray-100'}`}>
+            <FiUser /> My Profile
+          </NavLink>
+        </>
+      )}
     </>
   );
 
