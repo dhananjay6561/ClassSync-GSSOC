@@ -6,14 +6,11 @@ const { generateSubstitutionsForLeave } = require('../services/substitutionEngin
 // Teacher: Get their substitutions
 exports.getMySubstitutions = async (req, res) => {
   try {
-    const teacherId = req.user.userId;
-    const schoolId = req.schoolId;
+    
 
-    const subs = await Substitution.find({
-      substituteTeacherId: teacherId,
-      schoolId,
-    })
+    const subs = await Substitution.find({ substituteTeacherId: req.user._id })
       .populate('originalTeacherId', 'name email')
+      .populate('substituteTeacherId', 'name email')
       .populate({
         path: 'scheduleSlotId',
         select: 'weekday periodIndex subject classSection',
@@ -30,45 +27,68 @@ exports.getMySubstitutions = async (req, res) => {
 // Admin: Get all substitutions in their school
 exports.getAllSubstitutions = async (req, res) => {
   try {
-    const schoolId = req.schoolId;
+     const page = parseInt(req.query.page) || 1;
+     const limit = parseInt(req.query.limit) || 30;
 
-    const subs = await Substitution.find({ schoolId })
+    const total = await Substitution.countDocuments({ schoolId: req.schoolId });
+
+    const subs = await Substitution.find({ schoolId: req.schoolId })
       .populate('originalTeacherId', 'name email')
       .populate('substituteTeacherId', 'name email')
-      .populate({
-        path: 'scheduleSlotId',
-        select: 'weekday periodIndex subject classSection',
-      })
-      .sort({ assignedAt: -1 });
+      .populate('scheduleSlotId')
+      .sort({ assignedAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
 
-    res.json(subs);
+    res.json({
+      substitutions: subs,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (err) {
     console.error('getAllSubstitutions error:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-// Admin: Get substitution history with optional date range
+// Admin: Get substitution history with optional date range and pagination
 exports.getSubstitutionHistory = async (req, res) => {
   try {
     const schoolId = req.schoolId;
-    const { from, to } = req.query;
+    const { from, to, page = 1, limit = 10 } = req.query;
 
+    // Build date filter
     const dateFilter = {};
     if (from) dateFilter.createdAt = { $gte: new Date(from) };
     if (to) dateFilter.createdAt = { ...dateFilter.createdAt, $lte: new Date(to) };
 
-    const substitutions = await Substitution.find(dateFilter)
+    // Total records count (for pagination)
+    const total = await Substitution.countDocuments({
+       ...dateFilter,
+       schoolId: schoolId
+    });
+
+    // Fetch paginated substitutions
+    const substitutions = await Substitution.find({
+      ...dateFilter,
+      schoolId
+    })
       .populate('originalTeacherId', 'name email')
       .populate('substituteTeacherId', 'name email')
-      .populate('scheduleSlotId');
+      .populate('scheduleSlotId')
+      .sort({ assignedAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
 
+    // Filter by school
     const filtered = substitutions.filter(sub => 
       sub.scheduleSlotId?.schoolId?.toString() === schoolId.toString()
     );
 
+    // Map for frontend
     const result = filtered.map(sub => ({
-      date: sub.date ? sub.date.toISOString().split('T')[0] : 'N/A', // Format date as YYYY-MM-DD
+      date: (sub.date || sub.assignedAt || sub.createdAt)?.toISOString().split('T')[0] || 'N/A',
       period: sub.scheduleSlotId?.periodIndex + 1,
       weekday: sub.scheduleSlotId?.weekday,
       subject: sub.scheduleSlotId?.subject,
@@ -84,12 +104,20 @@ exports.getSubstitutionHistory = async (req, res) => {
       }
     }));
 
-    res.json({ count: result.length, history: result });
+    res.json({
+      count: result.length, // records in this page
+      total,                // total records in DB
+      page: Number(page),
+      limit: Number(limit),
+      history: result
+    });
+
   } catch (err) {
     console.error('Substitution History Error:', err);
     res.status(500).json({ message: 'Failed to fetch substitution history' });
   }
 };
+
 
 // Admin: Generate substitutions for a leave request
 exports.generateSubstitutions = async (req, res) => {
